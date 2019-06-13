@@ -1,0 +1,702 @@
+
+<html>
+   <head>
+   <meta charset="UTF-8">
+   
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+ 
+   <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+   <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>          
+
+   <link href="https://fonts.googleapis.com/css?family=Roboto:400,400" rel="stylesheet" type="text/css">
+   <link href="https://fonts.googleapis.com/css?family=Tangerine&display=swap" rel="stylesheet">
+
+   
+   <style>
+   
+      body{
+         background-color: #F6F7EB;
+      }
+      
+      h1{
+         margin-bottom: 0px;
+      }
+      
+      table
+      {
+         border-collapse: collapse;
+      }
+
+      th {
+         border-bottom: 1px solid #ccc;
+      }
+
+      .pagination li {
+         display:inline-block;
+         padding:1px;
+      }
+
+      .list {
+      font-family: 'Roboto', serif;
+      }
+
+      tr
+      {
+         border-bottom: 1px solid #ccc;
+         background-color: blanchedalmond;   
+         color: black
+      }
+
+      td {
+         padding: 2px;
+      }
+
+      input {
+         border: solid 1px #ccc;
+         border-radius: 5px;
+         padding: 7px 14px;
+         margin-bottom: 10px
+      }
+
+      input:focus {
+         outline: none;
+         border-color: #aaa;
+      }
+
+      .sort, button {
+         padding: 8px 30px;
+         border: none;
+         display: inline-block;
+         color: black;
+         background-color: transparent;
+         text-decoration: none;
+         height: 30px;
+         font-size: 0.9em;
+         font-weight: bold;
+      }
+
+      .sort:hover {
+         text-decoration: none;
+      }
+
+      .sort:focus {
+         outline: none;
+      }
+
+      .sort:after {
+         display: inline-block;
+         width: 0;
+         height: 0;
+         border-left: 5px solid transparent;
+         border-right: 5px solid transparent;
+         border-bottom: 5px solid transparent;
+         content: "";
+         position: relative;
+         top: -10px;
+         right: -5px;
+      }
+
+      .sort.asc:after {
+         width: 0;
+         height: 0;
+         border-left: 5px solid transparent;
+         border-right: 5px solid transparent;
+         border-top: 5px solid #000;
+         content: "";
+         position: relative;
+         top: 4px;
+         right: -5px;
+      }
+
+      .sort.desc:after {
+         width: 0;
+         height: 0;
+         border-left: 5px solid transparent;
+         border-right: 5px solid transparent;
+         border-bottom: 5px solid #000;
+         content: "";
+         position: relative;
+         top: -4px;
+         right: -5px;
+      }
+
+      
+
+      .bio-hidden {
+         position: absolute;
+         left: -10000px;
+         top: auto;
+         width: 1px;
+         height: 1px;
+         overflow: hidden;
+      }
+
+      input.search {
+         float: left;
+         width: 100%;
+      }
+      
+
+      
+      .tab {
+         overflow: hidden;
+         border: 1px solid #ccc;
+         background-color: #f1f1f1;
+      }
+
+      
+      .tab button {
+         background-color: inherit;
+         float: left;
+         border: none;
+         outline: none;
+         cursor: pointer;
+         padding: 14px 16px;
+         transition: 0.3s;
+      }
+
+      
+      .tab button:hover {
+         background-color: #ddd;
+      }
+
+      
+      .tab button.active {
+         background-color: #ccc;
+      }
+
+      
+      .tabcontent {
+         display: none;
+         padding: 6px 12px;
+         border: 1px solid #ccc;
+         border-top: none;
+      }
+
+      .tabcontent {
+         animation: fadeEffect 1s;  
+      }
+
+      
+      @keyframes fadeEffect {
+         from {opacity: 0;}
+         to {opacity: 1;}
+      }
+
+      
+      #mtabs_wrapper {
+         width: 422px;
+      }
+      #mtabs_container {
+         border-bottom: 1px solid #ccc;
+      }
+      #mtabs {
+         list-style: none;
+         padding: 5px 0 4px 0;
+         margin: 0 0 0 0px;
+            
+      }
+      
+      span {
+         display: none;
+      }
+      
+      #mtabs input{
+         display: none;
+      }
+      
+      #mtabs li {
+         display: inline;
+      }
+      #mtabs li a {
+         padding: 4px 6px;
+         text-decoration: none;
+         color:#E64E28;
+         font-family: Palatino, serif;
+         font-size:18px;
+      }
+      #mtabs li a:hover {
+         border-bottom: 3px solid #E64E28;
+         padding: 4px 6px;
+      }
+      #mtabs li.active a {
+         border-bottom: 1px solid #ccc;
+         background-color: #fff;
+         padding: 4px 6px 5px 6px;
+            
+      }
+      #mtabs li.active a:hover {
+         background-color: #eeeeee;
+         padding: 4px 6px 5px 6px;
+            
+      }
+      
+      #mtabs li a.icon_accept {
+         background-image: url(accept.png);
+         background-position: 5px;
+         background-repeat: no-repeat;
+         padding-left: 24px;
+      }
+      #mtabs li a.icon_accept:hover {
+         padding-left: 24px;
+      }
+      
+      #mtabs_content_container {
+         border: 1px solid #ccc;
+         border-top: 1px solid #ccc;
+         padding: 10px;
+         width: 600px;
+      }
+      .mtab_content {
+         display: none;
+      }
+   
+      /* Extra small devices (phones, 450px and down) */
+      @media only screen and (max-width: 450px) {
+         h1 {
+            text-align: center;
+            color: #E64E28;
+            font-family: 'Tangerine', cursive;
+            font-size: 45px;
+         }
+         
+         span {
+            display: block;
+            width: 33px;
+            height: 4px;
+            margin-bottom: 5px;
+            position: relative;
+            
+            background: #E64E28;
+            border-radius: 3px;
+            
+            z-index: 1;
+            
+            transform-origin: 4px 0px;
+            
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                              opacity 0.55s ease;
+         }
+         
+         #mtabs span:first-child
+         {
+            transform-origin: 0% 0%;
+         }
+
+         #mtabs span:nth-last-child(2)
+         {
+            transform-origin: 0% 100%;
+         }
+
+         /* Transform all the slices of hamburger into a crossmark.*/
+         #mtabs input:checked ~ span
+         {
+            opacity: 1;
+            transform: rotate(45deg) translate(-2px, -1px);
+            background: #E64E28;
+         }
+
+         #mtabs input:checked ~ span:nth-last-child(3)
+         {
+            opacity: 0;
+            transform: rotate(0deg) scale(0.2, 0.2);
+         }
+
+         #mtabs input:checked ~ span:nth-last-child(2)
+         {
+            transform: rotate(-45deg) translate(0, -1px);
+         }
+         
+         #mtabs input
+         {
+            display: block;
+            width: 40px;
+            height: 32px;
+            position: absolute;
+            top: 52px;
+            left: 12px;
+            
+            cursor: pointer;
+            
+            opacity: 0; /* hide this */
+            z-index: 2; /* and place it over the hamburger */
+            
+            -webkit-touch-callout: none;
+         }
+         
+        
+         
+         #menu
+			{
+				position: absolute;
+				width: 300px;
+				margin: 0px 0 0 -50px;
+				padding: 50px;
+				padding-top: 125px;
+				
+				background: #393E41;
+				list-style-type: none;
+				-webkit-font-smoothing: antialiased;
+				/* to stop flickering of text in safari */
+				
+				transform-origin: 0% 0%;
+				transform: translate(-100%, 0);
+				
+				transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+			}
+
+		#menu li
+			{
+				padding: 10px 0;
+				font-size: 22px;
+				display: list-item;
+			}
+		#mtabs input:checked ~ ul
+			{
+				transform: none;
+			}
+      } 
+
+      /* Small devices (portrait tablets and large phones, 450px and up) */
+      @media only screen and (min-width: 450px) {
+         h1 {
+            text-align: center;
+            color: #E64E28;
+            font-family: 'Tangerine', cursive;
+            font-size: 60px;
+         }
+      } 
+      
+      /* Medium devices (landscape tablets, 768px and up) */
+      @media only screen and (min-width: 768px) {
+         h1 {
+            text-align: center;
+            color: #E64E28;
+            font-family: 'Tangerine', cursive;
+            font-size: 6em;
+         }
+      } 
+      
+      /* Large devices (laptops/desktops, 992px and up) */
+      @media only screen and (min-width: 992px) {
+         h1 {
+            text-align: center;
+            color: #E64E28;
+            font-family: 'Tangerine', cursive;
+            font-size: 6em;
+         }       
+      } 
+      
+      /* Extra large devices (large laptops and desktops, 1200px and up) */
+      @media only screen and (min-width: 1200px) {
+         h1 {
+            text-align: center;
+            color: #E64E28;
+            font-family: 'Tangerine', cursive;
+            font-size: 6em;
+         }
+      }
+      
+   </style>
+   </head>
+<body>
+
+<h1>Haberler</h1>     
+
+  <div class="mtabs_wrapper">
+    
+    
+    <div id="mtabs">
+   
+      <!-- Fake checkbox used as click reciever-->
+      <input type="checkbox" />
+      
+      <!-- Navigation Hamburguer -->
+      <span></span>
+      <span></span>
+      <span></span>
+      
+        <ul id="menu">
+            <li><a href="indexf1b9.html?category=siyaset" rel="tab1" id="defaultOpen">Siyaset</a></li>
+            <li><a href="indexc8b8.html?category=ekonomi" rel="tab2">Ekonomi</a></li>
+            <li><a href="indexa328.html?category=sanat" rel="tab3">Kültür ve Sanat</a></li>
+            <li><a href="indexec15.html?category=bilim" rel="tab3">Bilim ve Teknoloji</a></li>
+            <li><a href="index5560.html?category=emlak" rel="tab3">Emlak</a></li>
+            <li><a href="index68cc.html?category=otomobil" rel="tab3">Otomobil</a></li>
+            <li><a href="indexab5e.html?category=spor" rel="tab3">Spor</a></li>
+            <li><a href="index3255.html?category=magazin" rel="tab3">Magazin</a></li>
+            <li><a href="index3629.html?category=din" rel="tab3">Din</a></li>
+            <li><a href="index254a.html?category=articles" rel="tab3">Köşe Yazıları</a></li>
+        </ul>
+    </div>
+   
+    <p>Date: <input type="text" id="datepicker"></p>  <br>
+   
+    <div id="mtabs_content_container">
+        <div id="tab1" class="mtab_content">
+          <p>Tab Content 1</p>
+        </div>
+        <div id="tab2" class="mtab_content">
+            <p>Tab content 2</p>
+        </div>
+        <div id="tab3" class="mtab_content">
+            <p>Tab content 3</p>
+        </div>
+        <div id="tab4" class="mtab_content">
+            <p>Tab content 4</p>
+        </div>
+    </div>
+   
+   </div>
+
+
+  <br>
+ 
+ <div id="titles">
+    
+
+  
+   
+  <input  class="search" placeholder="Ara"/>   <br>
+
+ 
+
+   <table>
+     <thead>
+      
+       <th>
+         <button class="sort" data-sort="title">Haber Başlığı</button>
+       </th>
+       <th>
+        <button class="sort" data-sort="source">Kaynak</button>
+      </th>
+       <th>
+         <button class="sort" data-sort="timestamp">Tarih&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+       </th>
+     
+     </thead>
+     
+     <tbody class="list">
+       
+       <tr>
+       
+         <td class="title">Şans Topu çekiliş sonuçları açıklandı</td>
+         <td class="source"><a href="http://www.hurriyet.com.tr//gundem/12-haziran-sans-topu-cekilis-sonuclari-aciklandi-sans-topu-cekilis-sorgulama-41242342">http://www.hurriyet.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şans Topu çekiliş sonuçları açıklandı! (12.06.2019)</td>
+         <td class="source"><a href="https://www.sozcu.com.tr/2019/gundem/sans-topu-cekilis-sonuclari-aciklaniyor-12-06-2019-5127685/">http://www.sozcu.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şans Topu çekiliş sonuçları! (12 Haziran 2019)</td>
+         <td class="source"><a href="http://www.milliyet.com.tr/sans-topu-cekilisi-saat-kacta--gundem-2888085/">http://www.milliyet.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şarkıcı Berksan trafik kazası geçirdi</td>
+         <td class="source"><a href="http://www.cumhuriyet.com.tr//1435103">http://www.cumhuriyet.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şehit Uzman Çavuş Üçkan son yolculuğuna uğurlandı</td>
+         <td class="source"><a href="http://www.star.com.tr///www.star.com.tr/guncel/tuncelide-sehit-dusen-uzman-cavus-uckan-son-yolculuguna-ugurlandi-haber-1460529/">http://www.star.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şemsiyeler ve ezanlar</td>
+         <td class="source"><a href="http://www.yenisafak.com//yazarlar/serdartuncer/semsiyeler-ve-ezanlar-2051689">http://www.yenisafak.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şemsiyeyle saklanmaya çalışan PKK&#39;lı teröristler kamerada</td>
+         <td class="source"><a href="http://www.ensonhaber.com//semsiyeyle-saklanmaya-calisan-pkkli-teroristler-kamerada.html">http://www.ensonhaber.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şenol Güneş isyan etti: İnsan x-ray cihazına konulmaz</td>
+         <td class="source"><a href="http://www.aydinlik.com.tr//senol-gunes-isyan-etti-insan-x-ray-cihazina-konulmaz-spor-haziran-2019">http://www.aydinlik.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şentop’tan göç dalgası uyarısı</td>
+         <td class="source"><a href="http://www.milliyet.com.tr/sentop-tan-goc-dalgasi-uyarisi-siyaset-2887979/">http://www.milliyet.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şeyma Subaşı eski sevgilisinin mekanına alınmadı! İşte olayın perde arkası...</td>
+         <td class="source"><a href="http://www.hurriyet.com.tr//galeri-seyma-subasi-eski-sevgilisinin-mekanina-alinmadi-iste-olayin-perde-arkasi-41240153">http://www.hurriyet.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şeyma hata yaptı ve yapmaya da devam ediyor</td>
+         <td class="source"><a href="http://www.haberturk.com//esin-ovet-seyma-subasi-hata-yapmaya-devam-ediyor-magazin-haberleri-2488876-magazin">http://www.haberturk.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şiirin ve umudun yorulmaz iğnesi Sennur Sezer mezarı başında anıldı</td>
+         <td class="source"><a href="https://www.evrensel.net/haber/381116/siirin-ve-umudun-yorulmaz-ignesi-sennur-sezer-mezari-basinda-anildi-2">http://www.evrensel.net</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şirket kusursuz, ölen amir kusurluymuş</td>
+         <td class="source"><a href="https://www.birgun.net/haber-detay/sirket-kusursuz-olen-amir-kusurluymus.html">http://www.birgun.net</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şişli&#39;de dehşet anları! 350 bin liralık silahlı gasp</td>
+         <td class="source"><a href="https://www.turkiyegazetesi.com.tr/yasam/630550.aspx">http://www.turkiyegazetesi.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şok! 16- 15 oldu, transfer yasağı...</td>
+         <td class="source"><a href="http://www.hurriyet.com.tr//sporarena/galatasaray-besiktas-ve-trabzonsporu-bekleyen-buyuk-tehlike-41242239">http://www.hurriyet.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şoke eden baskında pes dedirten manzara</td>
+         <td class="source"><a href="https://www.aksam.com.tr/yasam/deniz-manzarali-balkonunda-saksilar-icinde-esrar-yetistirmis/haber-979918">http://www.aksam.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şoke eden olay! Su şişesinden alkol çıktı</td>
+         <td class="source"><a href="https://www.ortadogugazetesi.com/yasam/soke-eden-olay-su-sisesinden-alkol-cikti-h3014.html">http://www.ortadogugazetesi.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şu an tüketiciye satılan kayısı Malatya kayısısı değil</td>
+         <td class="source"><a href="http://www.karar.com//ekonomi-haberleri/su-an-tuketiciye-satilan-kayisi-malatya-kayisisi-degil-1237328">http://www.karar.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şu an tüketiciye sunulan kayısı Malatya kayısısı değil</td>
+         <td class="source"><a href="https://www.ortadogugazetesi.com/ekonomi/su-an-tuketiciye-sunulan-kayisi-malatya-kayisisi-degil-h3032.html">http://www.ortadogugazetesi.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şüphelerim doğru çıktı</td>
+         <td class="source"><a href="https://hthayat.haberturk.com/yazarlar/yesim-tijen/1071271-suphelerim-dogru-cikti?utm_source=haberturk_anasayfa&amp;utm_medium=slidernews">http://www.haberturk.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şırnak&#39;ta 2 terörist etkisiz hale getirildi</td>
+         <td class="source"><a href="http://www.ntv.com.tr//turkiye/sirnakta-2-terorist-etkisiz-hale-getirildi,1yMZ1QPylUmxTFCY4DBRvg">http://www.ntv.com.tr</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+       <tr>
+       
+         <td class="title">Şırnak’ta 2 terörist etkisiz</td>
+         <td class="source"><a href="http://www.karar.com//guncel-haberler/sirnakta-2-terorist-etkisiz-hale-getirildi-1237508">http://www.karar.com</a></td>
+         <td class="timestamp">2019-06-13</td>
+       
+       </tr>
+       
+     </tbody>
+        
+
+
+   <ul class="pagination">
+   </ul>
+ 
+ </div>
+
+
+<!--  <script> -->
+<!--    function changeUrl(date) { -->
+<!--      var mtabs = document.querySelectorAll('#mtabs li a'); -->
+<!--      mtabs.forEach(function(link){ -->
+<!--        try { -->
+<!--          var newLink = link.href.match(/(\?category=.*)&date/)[1] -->
+<!--        } -->
+<!--        catch (x) { -->
+<!--          newLink = link.href.match(/(\?category=.*)/)[1] -->
+<!--        }         -->
+<!--        newLink += '&date=' + date -->
+<!--        link.href = newLink -->
+<!--      }) -->
+<!--    } -->
+<!--  -->
+<!--    $(document).ready(function() { -->
+<!--      $("#datepicker").datepicker({ -->
+<!--        dateFormat: "yy-mm-dd", -->
+<!--        onSelect: function(date) { -->
+<!--          changeUrl(date); -->
+<!--        } -->
+<!--      }); -->
+<!--    }); -->
+<!--  -->
+<!--    var titlesList = new List('titles', { -->
+<!--      valueNames: ['category', 'title', 'source', 'timestamp'] -->
+<!--    }); -->
+<!--  </script> -->
+
+   </body>
+</html>
+
+
+
+        
