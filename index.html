@@ -6,10 +6,13 @@
    
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-   <script src="http://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
- 
-   <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
-   <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>          
+   
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+   
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>      
 
    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400" rel="stylesheet" type="text/css">
    <link href="https://fonts.googleapis.com/css?family=Tangerine&display=swap" rel="stylesheet">
@@ -53,6 +56,10 @@
 	    
       }
       
+      #selection{
+	      background-color: #F6F7EB;
+      }
+      
       .pagination li {
          display:inline-block;
          padding:1px;
@@ -90,8 +97,12 @@
       }
       
       .source{
-	      text-align: center;
+	      text-align: left;
       }
+      
+     .timestamp{
+	     text-align: center;
+     }
 
       input {
          border: solid 1px #F6F7EB;
@@ -106,7 +117,7 @@
       }
 
       .sort, button {
-         padding: 8px 30px;
+         padding: 8px 0px;
          border: none;
          display: inline-block;
          color: black;
@@ -236,7 +247,6 @@
       
       .mtabs_wrapper {
          background-color: #F6F7EB;
-         margin-bottom: 5px;
       }
       
       
@@ -476,12 +486,14 @@
 		
 		.title{
 			padding-top: 5px;
-			font-size: 14px;
+			font-size: 13px;
+			text-align: left;
 		}
 		
 		.source{
 			padding-top: 5px;
-			font-size: 11px;
+			font-size: 10px;
+			text-align: right;
 		}
 		
 		#titles .timestamp{
@@ -600,32 +612,30 @@
 	    
     </div>
     
-    <div id="selection">
+    
+    
+   </div>
+ 
+ <div id="titles">
+	<div id="selection">
     	<div id="ara_sel">
     		<input  class="search" placeholder="Ara" id="ara_search"/>
 	    </div>
 	    <div id="date_sel">
 	    	<input type="text" id="datepicker" placeholder="Date">
 	    </div>
-    </div>
-    
-   </div>
-
-
-  <br>
- 
- <div id="titles">
-   <table align="center">
+	</div>
+    <table align="center">
      <thead>
       
-       <th>
+       <th align="left">
          <button class="sort" data-sort="title">Haber Başlığı</button>
        </th>
-       <th>
+       <th align="left">
         <button class="sort" data-sort="source">Kaynak</button>
       </th>
        <th>
-         <button class="sort" data-sort="timestamp">Tarih&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+         <button class="sort" data-sort="timestamp">Tarih</button>
        </th>
      
      </thead>
@@ -820,7 +830,7 @@
 
 <script>
 	function changeUrl(date) {
-		var mtabs = document.querySelectorAll('#mtabs li a');
+		var mtabs = document.querySelectorAll('#menu_icon li a');
 		mtabs.forEach(function(link){
 			try {
 				var newLink = link.href.match(/(\?category=.*)&date/)[1]
