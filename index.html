@@ -325,6 +325,32 @@
 			background-color: white;
 			background-origin: padding-box;
 	    }
+	    
+	    #ui-datepicker-div{
+		    width: 200px !important;
+		    background-color: #393E41;
+		    padding: 10px;
+		    color: white;
+		    border-radius: 9px;
+		    font-family: Palatino, serif;
+	    }
+	    
+	    .ui-datepicker-title{
+		    padding-top: 15px;
+		    color: #F6F7EB;
+		   text-decoration: underline;
+		   text-transform:uppercase;
+	    }
+	    
+	    .ui-datepicker-prev{
+		    margin-right: 15px;
+	    }
+	    
+	    .ui-datepicker-calendar{
+		    margin-bottom: 2px;
+		    width: 100%;
+		    text-align: center;
+	    }
    
       /* Small devices (phones, 760px and down) */
       @media only screen and (max-width: 768px) {
@@ -513,6 +539,10 @@
 		body br{
 			display: none;
 		}
+		
+		#ui-datepicker-div{
+		    display: None !important;
+	    }
       } 
       
       /* Medium devices (landscape tablets, 769px and up) */
@@ -544,6 +574,10 @@
 		.pagination{
 	      margin-top: -30px;
 		  }
+		  
+		#ui-datepicker-div{
+		    display: None !important;
+	    }
 		 
       } 
       
@@ -622,7 +656,7 @@
     		<input  class="search" placeholder="Ara" id="ara_search"/>
 	    </div>
 	    <div id="date_sel">
-	    	<input type="text" id="datepicker" placeholder="Date">
+	    	<input type="date" id="datepicker" placeholder="Date">
 	    </div>
 	</div>
     <table align="center">
@@ -856,6 +890,8 @@
 		valueNames: ['category', 'title', 'source', 'timestamp']
 	});
 </script>
+
+</table>
 
    </body>
 </html>
