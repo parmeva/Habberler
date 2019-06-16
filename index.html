@@ -1,4 +1,5 @@
 
+<!DOCTYPE html>
 <html>
    <head>
    <meta charset="UTF-8">
@@ -16,6 +17,10 @@
    
    <style>
    
+      * {
+         box-sizing:border-box;
+      }
+      
       body{
          background-color: #393E41;
          margin: 0px;
@@ -23,6 +28,7 @@
       
       h1{
          margin-bottom: 0px;
+         margin-top: 0px;
          padding-top: 8px;
          text-align: center;
          color: #E64E28;
@@ -67,7 +73,6 @@
          color:#4A4A4A;
          font-family: Palatino, serif;
          font-size:18px;
-         text-align: center;
       }
       
       td a{
@@ -77,6 +82,14 @@
       
       td a:hover{
 	      text-decoration: underline;
+      }
+      
+      .title{
+	      border-right: 1px solid #ccc;
+      }
+      
+      .source{
+	      text-align: center;
       }
 
       input {
@@ -221,12 +234,11 @@
       }
       
       .mtabs_wrapper {
-         margin-left: 8px;
-         margin-right: 8px;
          background-color: #F6F7EB;
-         margin-right: 0px;
-         margin-left: 0px;
       }
+      
+      
+      
       #mtabs_container {
          border-bottom: 1px solid #ccc;
       }
@@ -312,6 +324,7 @@
 	         float: left;
 	         padding-top: 8px;
 	         padding-right: 20px;
+	         padding-left: 10px;
          }
          
          #hamburger {
@@ -431,12 +444,12 @@
       	}
       	
       	/* Force table to not be like tables anymore */
-		table, thead, tbody, th, td, tr {
-			display: block;
+		#titles table, #titles thead, #titles tbody, #titles th, #titles td, #titles tr {
+			display:block;
 		}
 		
 		/* Hide table headers (but not display: none;, for accessibility) */
-		thead tr {
+		#titles thead tr {
 			display: none;
 		}
 	    
@@ -445,8 +458,7 @@
 			border: none;
 			position:relative;
 			z-index: 1;
-			width: 100%;
-			
+			text-align: center;
 		}
 		
 		td:before {
@@ -460,10 +472,27 @@
 			white-space: nowrap;
 		}
 		
-		.timestamp{
+		.title{
+			padding-top: 10px;
+		}
+		
+		.source{
+			padding-top: 15px;
+			font-size: 16px;
+		}
+		
+		#titles .timestamp{
 			display: none;
 		}
 		
+		table{
+			width: 85%;
+			margin-bottom: 35px;
+		}
+		
+		#ara_sel input{
+			border-radius: 0px !important;
+		}		
       } 
       
       /* Medium devices (landscape tablets, 769px and up) */
@@ -482,12 +511,14 @@
 		 }
 		 
 		#ara_search{
-			width: 72%;
-			margin-right: 3%;
+			margin-left: 2.5%;
+			width: 60%;
+			margin-right: 16.5%;
 		}
 		
 		#datepicker{
-			width:25%;
+			width: 18.5%;
+			margin-right: 2.5%;
 		}
 		
 		.pagination{
@@ -544,7 +575,7 @@
 	  	<div id="hamburger"></div>
 	  	
 	  	<ul id="menu">
-	        <li><a href="indexf1b9.html?category=siyaset" rel="tab1" id="defaultOpen">Siyaset</a></li>
+	        <li><a href="indexf1b9.html?category=siyaset" rel="tab1" id="defaultOpen" style="border-bottom: 3px solid #E64E28; padding: 4px 6px;">Siyaset</a></li>
 	        <li><a href="indexc8b8.html?category=ekonomi" rel="tab2">Ekonomi</a></li>
 	        <li><a href="indexa328.html?category=sanat" rel="tab3">Kültür ve Sanat</a></li>
 	        <li><a href="indexec15.html?category=bilim" rel="tab3">Bilim ve Teknoloji</a></li>
@@ -561,12 +592,16 @@
 	    
     </div>
     
-    <input  class="search" placeholder="Ara" id="ara_search"/>
+    <div id="selection">
+    	<div id="ara_sel">
+    		<input  class="search" placeholder="Ara" id="ara_search"/>
+	    </div>
+	        
+	    <div id="date_sel">
+	    	<input type="text" id="datepicker" placeholder="Date">
+	    </div>
+    </div>
     
-    <div id="mtabs_date">
-    		<input type="text" id="datepicker" placeholder="Date">
-	</div>
-   
    </div>
 
 
